@@ -8,11 +8,11 @@ describe(Expense) do
     end
   end
 
-  describe('#category') do
+  describe('#category_id') do
     it("returns the Category object") do
       test_category = Category.new({:name => "food"})
       test_expense = Expense.new({:category => test_category})
-      expect(test_expense.category()).to(eq(test_category))
+      expect(test_expense.category_id()).to(eq(test_category.id()))
     end
   end
 
@@ -54,7 +54,9 @@ describe(Expense) do
 
   describe("#save") do
     it("saves itself to the database") do
-      test_expense1 = Expense.new({:description => "pizza", :amount => 3.25, :date => "2015-01-01 00:00:00"})
+      test_category = Category.new({:name => "food"})
+      test_category.save()
+      test_expense1 = Expense.new({:description => "pizza", :amount => 3.25, :date => "2015-01-01 00:00:00", :category_id => test_category.id()})
       test_expense1.save()
       expect(Expense.all).to(eq([test_expense1]))
     end
