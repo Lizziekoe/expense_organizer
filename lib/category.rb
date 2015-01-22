@@ -29,13 +29,28 @@ class Category
 
   define_method(:percentage) do
     total = Expense.total()
-    expense_results = DB.exec("SELECT * FROM expenses JOIN categories ON (expenses.category_id = categories.id) WHERE categories.id = #{@id};")
+    expenses = self.all_expenses()
     category_total = 0.0
-    expense_results.each() do |expense|
-      amount = expense.fetch("amount").to_f()
-      category_total = category_total + amount
+    expenses.each() do |expense|
+      category_total = category_total + expense.amount()
     end
     category_total/total
   end
 
+  define_method(:add_expense) do |expense_id|
+    DB.exec("INSERT INTO categories_expenses (category_id, expense_id) VALUES (#{@id} , #{expense_id});")
+  end
+
+  define_method(:all_expenses) do
+    expense_results = DB.exec("SELECT expenses.* FROM categories JOIN categories_expenses ON (categories.id = categories_expenses.category_id) JOIN expenses ON (categories_expenses.expense_id = expenses.id) WHERE categories.id = #{@id};")
+    expenses = []
+    expense_results.each() do |expense|
+      description = expense.fetch("description")
+      amount = expense.fetch("amount").to_f()
+      date = expense.fetch("date")
+      id = expense.fetch("id").to_i()
+      expenses.push(Expense.new({:description => description, :amount => amount, :date =>date, :id => id}))
+    end
+    expenses
+  end
 end

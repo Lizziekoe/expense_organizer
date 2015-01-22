@@ -8,14 +8,6 @@ describe(Expense) do
     end
   end
 
-  describe('#category_id') do
-    it("returns the Category object") do
-      test_category = Category.new({:name => "food"})
-      test_expense = Expense.new({:category => test_category})
-      expect(test_expense.category_id()).to(eq(test_category.id()))
-    end
-  end
-
   describe('#description') do
     it("returns the description") do
       test_expense = Expense.new({:description => "pizza", :amount => 3.25, :date =>  "2015-01-01 00:00:00"})
@@ -56,7 +48,7 @@ describe(Expense) do
     it("saves itself to the database") do
       test_category = Category.new({:name => "food"})
       test_category.save()
-      test_expense1 = Expense.new({:description => "pizza", :amount => 3.25, :date => "2015-01-01 00:00:00", :category_id => test_category.id()})
+      test_expense1 = Expense.new({:description => "pizza", :amount => 3.25, :date => "2015-01-01 00:00:00"})
       test_expense1.save()
       expect(Expense.all).to(eq([test_expense1]))
     end
@@ -68,11 +60,11 @@ describe(Expense) do
       test_category1.save()
       test_category2 = Category.new({:name => "housing"})
       test_category2.save()
-      test_expense1 = Expense.new({:description => "pizza", :amount => 3.25, :category_id => test_category1.id() ,:date => "2015-01-01 00:00:00"})
+      test_expense1 = Expense.new({:description => "pizza", :amount => 3.25,:date => "2015-01-01 00:00:00"})
       test_expense1.save()
-      test_expense2 = Expense.new({:description => "carrot", :amount => 1.25, :category_id => test_category1.id(),:date => "2015-01-01 00:00:00"})
+      test_expense2 = Expense.new({:description => "carrot", :amount => 1.25,:date => "2015-01-01 00:00:00"})
       test_expense2.save()
-      test_expense3 = Expense.new({:description => "soap", :amount => 4.50, :category_id => test_category2.id(),:date => "2015-01-01 00:00:00"})
+      test_expense3 = Expense.new({:description => "soap", :amount => 4.50, :date => "2015-01-01 00:00:00"})
       test_expense3.save()
       expect(Expense.total()).to(eq(9.00))
     end

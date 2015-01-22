@@ -44,13 +44,46 @@ describe(Category) do
       test_category1.save()
       test_category2 = Category.new({:name => "housing"})
       test_category2.save()
-      test_expense1 = Expense.new({:description => "pizza", :amount => 3.25, :category_id => test_category1.id() ,:date => "2015-01-01 00:00:00"})
+      test_expense1 = Expense.new({:description => "pizza", :amount => 3.25,:date => "2015-01-01 00:00:00"})
       test_expense1.save()
-      test_expense2 = Expense.new({:description => "carrot", :amount => 1.25, :category_id => test_category1.id(),:date => "2015-01-01 00:00:00"})
+      test_expense2 = Expense.new({:description => "carrot", :amount => 1.25,:date => "2015-01-01 00:00:00"})
       test_expense2.save()
-      test_expense3 = Expense.new({:description => "soap", :amount => 4.50, :category_id => test_category2.id(),:date => "2015-01-01 00:00:00"})
+      test_expense3 = Expense.new({:description => "soap", :amount => 4.50,:date => "2015-01-01 00:00:00"})
       test_expense3.save()
+      test_category1.add_expense(test_expense1.id())
+      test_category1.add_expense(test_expense2.id())
+      test_category2.add_expense(test_expense2.id())
+      test_category2.add_expense(test_expense3.id())
       expect(test_category1.percentage()).to(eq(0.5))
     end
   end
+
+  describe("#add_expense") do
+    it("will insert into the categories_expenses table in the database") do
+      test_category1 = Category.new({:name => "food"})
+      test_category1.save()
+      test_expense1 = Expense.new({:description => "pizza", :amount => 3.25,:date => "2015-01-01 00:00:00"})
+      test_expense1.save()
+      test_expense2 = Expense.new({:description => "carrot", :amount => 1.25,:date => "2015-01-01 00:00:00"})
+      test_expense2.save()
+      test_category1.add_expense(test_expense1.id())
+      test_category1.add_expense(test_expense2.id())
+      expect(test_category1.all_expenses()).to(eq([test_expense1,test_expense2]))
+    end
+  end
+
+  describe("#all_expenses") do
+    it("returns an array with all expense objects with itself as a category") do
+      test_category1 = Category.new({:name => "food"})
+      test_category1.save()
+      test_expense1 = Expense.new({:description => "pizza", :amount => 3.25,:date => "2015-01-01 00:00:00"})
+      test_expense1.save()
+      test_expense2 = Expense.new({:description => "carrot", :amount => 1.25,:date => "2015-01-01 00:00:00"})
+      test_expense2.save()
+      test_category1.add_expense(test_expense1.id())
+      test_category1.add_expense(test_expense2.id())
+      expect(test_category1.all_expenses()).to(eq([test_expense1,test_expense2]))
+    end
+  end
+
 end
