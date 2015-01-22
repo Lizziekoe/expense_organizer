@@ -1,6 +1,6 @@
 class Category
 
-  attr_reader(:name,:id)
+  attr_reader(:name, :id)
 
   define_method(:initialize) do |attributes|
     @name = attributes[:name]
@@ -25,6 +25,17 @@ class Category
   define_method(:save) do
     result = DB.exec("INSERT INTO categories (name) VALUES ('#{@name}') RETURNING id;")
     @id = result.first().fetch("id").to_i()
+  end
+
+  define_method(:percentage) do
+    total = Expense.total()
+    expense_results = DB.exec("SELECT * FROM expenses JOIN categories ON (expenses.category_id = categories.id) WHERE categories.id = #{@id};")
+    category_total = 0.0
+    expense_results.each() do |expense|
+      amount = expense.fetch("amount").to_f()
+      category_total = category_total + amount
+    end
+    category_total/total
   end
 
 end

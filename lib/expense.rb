@@ -33,4 +33,14 @@ attr_reader(:description, :amount, :date, :id, :category_id)
     @id = result.first().fetch("id").to_i()
   end
 
+  define_singleton_method(:total) do
+    expense_results = DB.exec("SELECT * FROM expenses;")
+    total_amount = 0.0
+    expense_results.each() do |expense|
+      amount = expense.fetch("amount").to_f()
+      total_amount = total_amount + amount
+    end
+    total_amount
+  end
+
 end

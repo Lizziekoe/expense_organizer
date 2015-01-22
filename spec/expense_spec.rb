@@ -62,5 +62,21 @@ describe(Expense) do
     end
   end
 
+  describe(".total") do
+    it("returns the total of all expenses") do
+      test_category1 = Category.new({:name => "food"})
+      test_category1.save()
+      test_category2 = Category.new({:name => "housing"})
+      test_category2.save()
+      test_expense1 = Expense.new({:description => "pizza", :amount => 3.25, :category_id => test_category1.id() ,:date => "2015-01-01 00:00:00"})
+      test_expense1.save()
+      test_expense2 = Expense.new({:description => "carrot", :amount => 1.25, :category_id => test_category1.id(),:date => "2015-01-01 00:00:00"})
+      test_expense2.save()
+      test_expense3 = Expense.new({:description => "soap", :amount => 4.50, :category_id => test_category2.id(),:date => "2015-01-01 00:00:00"})
+      test_expense3.save()
+      expect(Expense.total()).to(eq(9.00))
+    end
+  end
+
 
 end

@@ -37,4 +37,20 @@ describe(Category) do
       expect(Category.all).to(eq([test_category1]))
     end
   end
+
+  describe("#percentage") do
+    it("returns the percentage of total expenses spent in itself") do
+      test_category1 = Category.new({:name => "food"})
+      test_category1.save()
+      test_category2 = Category.new({:name => "housing"})
+      test_category2.save()
+      test_expense1 = Expense.new({:description => "pizza", :amount => 3.25, :category_id => test_category1.id() ,:date => "2015-01-01 00:00:00"})
+      test_expense1.save()
+      test_expense2 = Expense.new({:description => "carrot", :amount => 1.25, :category_id => test_category1.id(),:date => "2015-01-01 00:00:00"})
+      test_expense2.save()
+      test_expense3 = Expense.new({:description => "soap", :amount => 4.50, :category_id => test_category2.id(),:date => "2015-01-01 00:00:00"})
+      test_expense3.save()
+      expect(test_category1.percentage()).to(eq(0.5))
+    end
+  end
 end
