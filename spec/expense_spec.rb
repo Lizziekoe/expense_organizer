@@ -8,6 +8,14 @@ describe(Expense) do
     end
   end
 
+  describe('#category') do
+    it("returns the Category object") do
+      test_category = Category.new({:name => "food"})
+      test_expense = Expense.new({:category => test_category})
+      expect(test_expense.category()).to(eq(test_category))
+    end
+  end
+
   describe('#description') do
     it("returns the description") do
       test_expense = Expense.new({:description => "pizza", :amount => 3.25, :date =>  "2015-01-01 00:00:00"})

@@ -1,16 +1,17 @@
 class Expense
 
-attr_reader(:description, :amount, :date, :id)
+attr_reader(:description, :amount, :date, :id, :category)
 
   define_method(:initialize) do |attributes|
-    @description = attributes.fetch(:description)
-    @amount = attributes.fetch(:amount)
-    @date = attributes.fetch(:date)
+    @description = attributes[:description]
+    @amount = attributes[:amount]
+    @date = attributes[:date]
     @id = attributes[:id]
+    @category = attributes[:category]
   end
 
-  define_method(:==) do |expense_to_compare|
-    @description.==(expense_to_compare.description).&(@amount.==(expense_to_compare.amount()).&(@date.==(expense_to_compare.date()).&(@id.==(expense_to_compare.id()))))
+  define_method(:==) do |ex_2_compare|
+    @description == ex_2_compare.description && @amount == ex_2_compare.amount && @date == ex_2_compare.date && @id == ex_2_compare.id && @category == ex_2_compare.category
   end
 
   define_singleton_method(:all) do
