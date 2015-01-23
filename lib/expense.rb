@@ -6,6 +6,7 @@ attr_reader(:description, :amount, :date, :id)
     @description = attributes[:description]
     @amount = attributes[:amount]
     @date = attributes[:date]
+    @date = "2001-01-01 00:00:00"
     @id = attributes[:id]
   end
 

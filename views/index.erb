@@ -1,0 +1,36 @@
+<h1>Welcome to The Expense Organizer</h1>
+
+<form action="/expense_list" method="post">
+  <label for="description">What did you buy?</label>
+  <input id="description" name="description" type="text">
+
+  <label for="amount">How much did it cost?</label>
+  <input id="amount" name="amount" type="text" placeholder="5.25">
+
+  <button type="submit">Add Item</button>
+
+</form>
+
+
+<p> Click on an expense to add a category </p>
+
+<ul>
+  <% @expenses.each do |expense| %>
+  <li><a href="/expense_list/<%= expense.id() %>"><%= expense.description() %></a></li>
+  <% end %>
+</ul>
+
+<form action="/added_category" method="post">
+  <label for="name">What Are Your Budgeting Categories?</label>
+  <input id="name" name="name" type="text">
+
+
+  <button type="submit">Add Category</button>
+
+</form>
+
+<ul>
+  <% @categories.each do |category| %>
+  <li><%= category.name() %></li>
+  <% end %>
+</ul>

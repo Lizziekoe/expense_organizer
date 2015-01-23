@@ -1,0 +1,12 @@
+<h4>The <%= @expense.description %> expense</h4>
+
+
+<form action="/expense_list/:id/added_category" method="post">
+  <label for="category">Select a Category</label>
+  <select id='category' name='category' type='text'>
+    <% @categories.each() do |category| %>
+    <option value="<%= category.id()%>"> <%= category.name() %> </option>
+    <% end %>
+  </select>
+  <button type="submit">Add task</button>
+</form>
