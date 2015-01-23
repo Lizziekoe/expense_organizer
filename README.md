@@ -1,8 +1,7 @@
 Expense Organizer
 ==========
 
-Creates a web app using Ruby to add a list and allow tasks to be added to a list
-using a SQL database.
+Creates a web app using Ruby to manage expenses and their categories.
 
 Database Setup
 --------------
